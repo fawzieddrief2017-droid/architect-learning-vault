@@ -42,6 +42,7 @@ Rather than treating systems as high-level abstractions or memorizing YAML synta
 | **[09. Kernel Execution Hierarchy & BPF Masquerade](02-kubernetes-internals/08-kernel-execution-hierarchy-and-bpf-masquerade.md)** | Order of precedence across the kernel stack & eBPF SNAT | Userspace syscall boundary (`connect4`) vs Netfilter Layer 3 vs driver Layer 2 (XDP/TC); `bpf.masquerade` lock-free per-CPU hash maps vs `iptables MASQUERADE`. |
 | **[10. The Container Runtime Engine Masterclass](02-kubernetes-internals/09-container-runtime-engine-masterclass.md)** | Complete 4-Chapter Masterclass on low-level container execution | CRI v1 gRPC architecture, streaming PTY allocation, containerd-shim subreaper (`PR_SET_CHILD_SUBREAPER`), OCI runc C-constructor (`nsexec.c`), CVE-2024-21626 / CVE-2019-5736 mitigations (`openat2` + `memfd_create`), PID 1 signal masking, and host sysctl hardening. |
 | **[11. Service Discovery vs. In-Kernel Packet Routing](02-kubernetes-internals/10-service-routing-and-internal-dns.md)** | Decoupling CoreDNS discovery (L7) from kube-proxy routing (L4) | In-memory kubelet Pod Manager Go structs, EndpointSliceController HTTP/2 Watch streams, service process debunking, and Headless Service peer-to-peer resolution. |
+| **[12. Senior Cloud Architect Runtime Field Manual](02-kubernetes-internals/11-senior-cloud-architect-runtime-guide.md)** | High-signal executive distillation of container runtime essentials | Signal vs. noise filtration, capacity planning math (inotify, NOFILE, PTYs), container security threat models, zero-downtime uptime engineering, and Terraform/EKS UserData decision matrix. |
 
 ---
 
@@ -65,7 +66,8 @@ architect-learning-vault/
     ├── 07-end-to-end-ingress-packet-walk.md
     ├── 08-kernel-execution-hierarchy-and-bpf-masquerade.md
     ├── 09-container-runtime-engine-masterclass.md
-    └── 10-service-routing-and-internal-dns.md
+    ├── 10-service-routing-and-internal-dns.md
+    └── 11-senior-cloud-architect-runtime-guide.md
 ```
 
 ---
