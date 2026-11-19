@@ -130,3 +130,6 @@ cilium-dbg monitor --type drop
 | **9.0** | **AWS VPC CNI & Nitro Hardware Density** | ENI allocation limits per instance type, secondary IP math, Prefix Delegation (`/28` blocks), and custom pod subnets. |
 | **9.5** | **Ingress Policies & Client IP Preservation** | `externalTrafficPolicy: Local` vs `Cluster`, hair-pinning traffic, asymmetric routing mitigation on NLBs. |
 | **10.0** | **Wire-Speed BGP & Low-Level Driver Tuning** | Cilium native routing via BGP peering with Top-of-Rack (ToR) switches, XDP driver-level DDoS drops, NIC ring buffer tuning. |
+
+> **Note:** Stages 9.0 (AWS VPC CNI & Prefix Delegation), 9.5 (externalTrafficPolicy: Local vs Cluster), and 10.0 (Wire-Speed BGP) are consolidated into Module 2.7 (`15-aws-vpc-cni-prefix-delegation-and-bgp.md`) in the Master Curriculum ([../README.md](../README.md)).
+

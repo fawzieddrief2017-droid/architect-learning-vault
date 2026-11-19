@@ -30,18 +30,27 @@ Rather than treating systems as high-level abstractions or memorizing YAML synta
 
 ### Part 2: Kubernetes Core Internals & The Linux Kernel
 
-| Module | Core Architecture Covered | Low-Level Systems Reality |
-| :--- | :--- | :--- |
-| **[02. Pod Anatomy & Linux Namespaces](02-kubernetes-internals/01-pod-anatomy-and-namespaces.md)** | The Pod Sandbox Pattern, `/pause` container, multi-container communication | Namespace matrix (`MNT`, `NET`, `IPC`, `UTS`, `PID`, `USER`), zombie process reaping via `pause()`, host-level `nsenter` debugging. |
-| **[03. ClusterIP Service Packet Walk](02-kubernetes-internals/02-service-clusterip-packet-walk.md)** | Service IP routing across nodes without physical interface binding | Netfilter `KUBE-SERVICES` chains, `statistic --mode random` probabilistic selection, `nf_conntrack` state tables, and VXLAN encapsulation. |
-| **[04. ConfigMaps & Dynamic Volumes](02-kubernetes-internals/03-configmaps-and-atomic-symlinks.md)** | Decoupling configuration from immutable containers | Process stack `execve()` immutability (env vars) vs. atomic `rename()` symlink swapping on in-memory `tmpfs` volumes. |
-| **[05. CoreDNS, Conntrack Race & ndots:5](02-kubernetes-internals/04-coredns-conntrack-race-and-ndots.md)** | Intermittent 5-second DNS latency spikes | `__nf_conntrack_confirm()` lock contention, parallel A/AAAA UDP socket collisions, `ndots:5` query multiplication, and NodeLocal DNSCache. |
-| **[06. Linux IPC & Shared Memory](02-kubernetes-internals/05-linux-ipc-and-shared-memory.md)** | Shared memory between Pod containers | Virtual Memory Manager page table mapping, SysV vs. POSIX IPC, `/dev/shm` 64MiB crash limit, and `emptyDir` tmpfs scaling. |
-| **[07. eBPF Socket-Level Bypass vs. CNI](02-kubernetes-internals/06-ebpf-socket-bypass-vs-cni.md)** | Direct kernel socket routing | `BPF_PROG_TYPE_SOCK_OPS`, `BPF_PROG_TYPE_SK_MSG`, `bpf_msg_redirect_hash()`, bypassing the TCP/IP stack, Netfilter, and veth pairs. |
-| **[08. End-to-End Ingress Packet Walk](02-kubernetes-internals/07-end-to-end-ingress-packet-walk.md)** | Ingress from public client to container socket | Route 53 -> AWS ALB -> AWS Load Balancer Controller discovery loop -> Target Group (Instance vs. IP Mode) -> Node driver -> Netfilter / eBPF -> Pod socket. |
-| **[09. Kernel Execution Hierarchy & BPF Masquerade](02-kubernetes-internals/08-kernel-execution-hierarchy-and-bpf-masquerade.md)** | Order of precedence across the kernel stack & eBPF SNAT | Userspace syscall boundary (`connect4`) vs Netfilter Layer 3 vs driver Layer 2 (XDP/TC); `bpf.masquerade` lock-free per-CPU hash maps vs `iptables MASQUERADE`. |
-| **[10. The Container Runtime Engine (Architect Field Manual)](02-kubernetes-internals/09-container-runtime-engine-architect-guide.md)** | High-signal executive distillation of container runtime essentials | Signal vs. noise filtration, CRI v1 architecture, containerd-shim subreaper decoupling, capacity planning math (inotify, NOFILE, PTYs), container security threat models (CVE-2024-21626, CVE-2019-5736), PID 1 signal masking, and Terraform/EKS UserData decision matrix. |
-| **[11. Service Discovery vs. In-Kernel Packet Routing](02-kubernetes-internals/10-service-routing-and-internal-dns.md)** | Decoupling CoreDNS discovery (L7) from kube-proxy routing (L4) | In-memory kubelet Pod Manager Go structs, EndpointSliceController HTTP/2 Watch streams, service process debunking, and Headless Service peer-to-peer resolution. |
+| Phase | Module ID & Title | Vault File (`02-kubernetes-internals/`) | Status | Cross-References & Core Primitives |
+| :--- | :--- | :--- | :--- | :--- |
+| **Phase 1: Linux Isolation & Runtime** | **1.1** Pod Anatomy & Namespaces | [01-pod-anatomy-and-namespaces.md](02-kubernetes-internals/01-pod-anatomy-and-namespaces.md) | Completed | `/pause` subreaper, `CLONE_NEW*`, `nsenter` |
+| **Phase 1** | **1.2** Linux IPC & Shared Memory | [05-linux-ipc-and-shared-memory.md](02-kubernetes-internals/05-linux-ipc-and-shared-memory.md) | Completed | `/dev/shm` 64MiB ceiling, `emptyDir: Memory` |
+| **Phase 1** | **1.3** Container Runtime Engine | [09-container-runtime-engine-architect-guide.md](02-kubernetes-internals/09-container-runtime-engine-architect-guide.md) | Completed | CRI gRPC, `containerd-shim`, `runc`, `SIGNAL_UNKILLABLE`, `inotify` math |
+| **Phase 2: Cluster Networking & DNS** | **2.1** ClusterIP Packet Walk | [02-service-clusterip-packet-walk.md](02-kubernetes-internals/02-service-clusterip-packet-walk.md) | Completed | `KUBE-SERVICES`, `nf_conntrack`, VXLAN |
+| **Phase 2** | **2.2** CoreDNS & `ndots:5` | [04-coredns-conntrack-race-and-ndots.md](02-kubernetes-internals/04-coredns-conntrack-race-and-ndots.md) | Completed | UDP conntrack races, `NodeLocal DNSCache` |
+| **Phase 2** | **2.3** eBPF Socket Bypass | [06-ebpf-socket-bypass-vs-cni.md](02-kubernetes-internals/06-ebpf-socket-bypass-vs-cni.md) | Completed | `BPF_PROG_TYPE_SOCK_OPS`, `SK_MSG` |
+| **Phase 2** | **2.4** AWS ALB Ingress Walk | [07-end-to-end-ingress-packet-walk.md](02-kubernetes-internals/07-end-to-end-ingress-packet-walk.md) | Completed | ALB Instance vs. IP mode, Target Group deregistration |
+| **Phase 2** | **2.5** Kernel Execution Hierarchy | [08-kernel-execution-hierarchy-and-bpf-masquerade.md](02-kubernetes-internals/08-kernel-execution-hierarchy-and-bpf-masquerade.md) | Completed | `connect4` vs. Netfilter vs. TC/XDP |
+| **Phase 2** | **2.6** Service Discovery vs. Routing | [10-service-routing-and-internal-dns.md](02-kubernetes-internals/10-service-routing-and-internal-dns.md) | Completed | CoreDNS L7 vs. `kube-proxy` L4 `EndpointSlice` watch |
+| **Phase 2** | **2.7** AWS VPC CNI, `/28` Prefix Delegation & BGP | `15-aws-vpc-cni-prefix-delegation-and-bgp.md` | Planned | Nitro ENI math, `/28` prefixes, `externalTrafficPolicy: Local` vs. `Cluster`, BGP |
+| **Phase 3: Workloads, Lifecycle & Storage** | **3.1A** ConfigMaps & Atomic Symlinks | [03-configmaps-and-atomic-symlinks.md](02-kubernetes-internals/03-configmaps-and-atomic-symlinks.md) | Completed | `execve()` env immutability vs. `rename()` symlink swap |
+| **Phase 3** | **3.1B** The 5 Workload Controllers | [11-workload-controllers-architecture.md](02-kubernetes-internals/11-workload-controllers-architecture.md) | Completed | `Informer`/`WorkQueue`, `Deployment`, `StatefulSet`, `DaemonSet`, `Job`, `CronJob` |
+| **Phase 3** | **3.2** Pod Lifecycle, Probes & Zero-Downtime Draining | [12-pod-lifecycle-probes-and-zero-downtime-draining.md](02-kubernetes-internals/12-pod-lifecycle-probes-and-zero-downtime-draining.md) | Completed | Orthogonal state axes, Prober CRI math, `preStop.sleep`, L4/L7 drain |
+| **Phase 3** | **3.3** CSI Storage & Volume Lifecycle | [13-csi-storage-and-volume-lifecycle.md](02-kubernetes-internals/13-csi-storage-and-volume-lifecycle.md) | Completed | `AttachDetachController`, `VolumeAttachment`, `NodeStage`/`NodePublish`, RWO Multi-Attach |
+| **Phase 4: Scheduling & Resource Sizing** | **4.1** QoS, `cgroup v2`, CFS Throttling & OOM | `14-qos-cgroups-cfs-throttling-and-oom.md` | Planned | `cpu.max`, `memory.max`, PSI (`cpu.pressure`), `oom_score_adj`, Kubelet eviction |
+| **Phase 4** | **4.2** Scheduler Internals, Affinity, Taints & PDBs | `16-scheduler-affinity-taints-and-pdb.md` | Planned | Filter/Score plugins, `topologySpreadConstraints`, `NoExecute` tolerations, PDB |
+| **Phase 5: Security & Micro-Segmentation** | **5.1** RBAC, IRSA / Pod Identity, Webhooks & PSA | `17-rbac-irsa-webhooks-and-psa.md` | Planned | Bound JWTs, OIDC exchange, Admission Webhooks, Audit Logs |
+| **Phase 5** | **5.2** NetworkPolicies & eBPF/IPSet Enforcement | `18-network-policies-and-microsegmentation.md` | Planned | Default-deny ingress/egress, CoreDNS port 53 rule, `hubble observe` |
+| **Phase 6: Control Plane & Day-2 Operations** | **6.1** `etcd` Raft Consensus, Upgrades & Triage | `19-etcd-consensus-upgrades-and-day2-triage.md` | Planned | Raft quorum, WAL `fsync` $<10\text{ms}$, MVCC compaction, `etcdctl snapshot`, `kubeadm` |
 
 ---
 
@@ -65,7 +74,10 @@ architect-learning-vault/
     ├── 07-end-to-end-ingress-packet-walk.md
     ├── 08-kernel-execution-hierarchy-and-bpf-masquerade.md
     ├── 09-container-runtime-engine-architect-guide.md
-    └── 10-service-routing-and-internal-dns.md
+    ├── 10-service-routing-and-internal-dns.md
+    ├── 11-workload-controllers-architecture.md
+    ├── 12-pod-lifecycle-probes-and-zero-downtime-draining.md
+    └── 13-csi-storage-and-volume-lifecycle.md
 ```
 
 ---
