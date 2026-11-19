@@ -7,6 +7,15 @@
 
 ---
 
+## 📕 Downloadable Architecture Compendium (104-Page Field Manual)
+
+The entire masterclass curriculum across all completed phases (15 in-depth modules) is compiled into a publication-grade offline reference book:
+
+* **[Download: Kubernetes-Systems-Architecture-Field-Manual.pdf](Kubernetes-Systems-Architecture-Field-Manual.pdf)**  
+  *(104 Pages | Complete Architecture Compendium | Formatted for Print & High-DPI Readers)*
+
+---
+
 ## 1. Engineering Philosophy
 
 This repository is a rigorous, publication-grade technical curriculum and operational reference for deep cloud infrastructure and container orchestration. 
