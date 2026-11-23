@@ -88,7 +88,7 @@ Rather than treating systems as high-level abstractions or memorizing `kubectl` 
 | Module | Vault File | Status | Core Primitives & Systems Reality |
 | :--- | :--- | :--- | :--- |
 | **5.1 RBAC, IRSA vs. EKS Pod Identity, Webhooks & PSA** | [01-rbac-irsa-webhooks-and-psa.md](05-pillar-security-and-identity/01-rbac-irsa-webhooks-and-psa.md) | ✅ Completed | Bound JWTs, OIDC STS exchange, `169.254.170.23` agent, IMDSv2 hop-limit=1, Webhooks |
-| **5.2 NetworkPolicies & eBPF/Cilium Micro-Segmentation** | `02-network-policies-and-microsegmentation.md` | 🎯 Next Target | Default-deny ingress/egress, CoreDNS port 53 rule, Cilium identity, `hubble observe` |
+| **5.2 NetworkPolicies & eBPF/Cilium Micro-Segmentation** | [02-network-policies-and-microsegmentation.md](05-pillar-security-and-identity/02-network-policies-and-microsegmentation.md) | ✅ Completed | Default-deny ingress/egress, CoreDNS port 53 rule, Cilium identity, `hubble observe` |
 
 ---
 
@@ -135,7 +135,8 @@ architect-learning-vault/
 │   └── 02-scheduler-affinity-taints-and-pdb.md
 │
 ├── 05-pillar-security-and-identity/                   # Pillar 5: RBAC, IRSA, Pod Identity & Webhooks
-│   └── 01-rbac-irsa-webhooks-and-psa.md
+│   ├── 01-rbac-irsa-webhooks-and-psa.md
+│   └── 02-network-policies-and-microsegmentation.md
 │
 └── 06-pillar-control-plane-and-etcd/                  # Pillar 6: etcd Raft, Watch Cache & Day-2 DR
     └── .gitkeep
