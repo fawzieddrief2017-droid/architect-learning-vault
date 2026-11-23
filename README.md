@@ -57,7 +57,7 @@ Rather than treating systems as high-level abstractions or memorizing YAML synta
 | **Phase 3** | **3.3** CSI Storage & Volume Lifecycle | [13-csi-storage-and-volume-lifecycle.md](02-kubernetes-internals/13-csi-storage-and-volume-lifecycle.md) | Completed | `AttachDetachController`, `VolumeAttachment`, `NodeStage`/`NodePublish`, RWO Multi-Attach |
 | **Phase 4: Scheduling & Resource Sizing** | **4.1** QoS, `cgroup v2`, CFS Throttling & OOM | [14-qos-cgroups-cfs-throttling-and-oom.md](02-kubernetes-internals/14-qos-cgroups-cfs-throttling-and-oom.md) | Completed | `cpu.max`, `memory.max`, PSI (`cpu.pressure`), `oom_score_adj`, Kubelet eviction |
 | **Phase 4** | **4.2** Scheduler Internals, Affinity, Taints & PDBs | [16-scheduler-affinity-taints-and-pdb.md](02-kubernetes-internals/16-scheduler-affinity-taints-and-pdb.md) | Completed | Filter/Score plugins, `topologySpreadConstraints`, `NoExecute` tolerations, PDB |
-| **Phase 5: Security & Micro-Segmentation** | **5.1** RBAC, IRSA / Pod Identity, Webhooks & PSA | `17-rbac-irsa-webhooks-and-psa.md` | Planned | Bound JWTs, OIDC exchange, Admission Webhooks, Audit Logs |
+| **Phase 5: Security & Micro-Segmentation** | **5.1** RBAC, IRSA / Pod Identity, Webhooks & PSA | [17-rbac-irsa-webhooks-and-psa.md](02-kubernetes-internals/17-rbac-irsa-webhooks-and-psa.md) | Completed | Bound JWTs, OIDC exchange, EKS Pod Identity, Admission Webhooks, PSA |
 | **Phase 5** | **5.2** NetworkPolicies & eBPF/IPSet Enforcement | `18-network-policies-and-microsegmentation.md` | Planned | Default-deny ingress/egress, CoreDNS port 53 rule, `hubble observe` |
 | **Phase 6: Control Plane & Day-2 Operations** | **6.1** `etcd` Raft Consensus, Upgrades & Triage | `19-etcd-consensus-upgrades-and-day2-triage.md` | Planned | Raft quorum, WAL `fsync` $<10\text{ms}$, MVCC compaction, `etcdctl snapshot`, `kubeadm` |
 
@@ -88,7 +88,8 @@ architect-learning-vault/
     ├── 12-pod-lifecycle-probes-and-zero-downtime-draining.md
     ├── 13-csi-storage-and-volume-lifecycle.md
     ├── 14-qos-cgroups-cfs-throttling-and-oom.md
-    └── 16-scheduler-affinity-taints-and-pdb.md
+    ├── 16-scheduler-affinity-taints-and-pdb.md
+    └── 17-rbac-irsa-webhooks-and-psa.md
 ```
 
 ---
