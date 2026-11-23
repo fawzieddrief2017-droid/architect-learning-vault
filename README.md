@@ -7,12 +7,12 @@
 
 ---
 
-## 📕 Downloadable Architecture Compendium (104-Page Field Manual)
+## 📕 Downloadable Architecture Compendium (119-Page Field Manual)
 
-The core systems curriculum (Pillars 1–4, 15 modules) is compiled into a publication-grade offline reference book:
+The complete 6-Pillar curriculum (18 masterclass modules) is compiled into a publication-grade offline reference book:
 
 * **[Download: Kubernetes-Systems-Architecture-Field-Manual.pdf](Kubernetes-Systems-Architecture-Field-Manual.pdf)**  
-  *(104 Pages | Formatted for Print & High-DPI Readers | Updated regularly as Pillars 5 & 6 complete)*
+  *(119 Pages | Complete 6-Pillar Edition | Formatted for Print & High-DPI Readers)*
 
 ---
 
@@ -96,7 +96,7 @@ Rather than treating systems as high-level abstractions or memorizing `kubectl` 
 
 | Module | Vault File | Status | Core Primitives & Systems Reality |
 | :--- | :--- | :--- | :--- |
-| **6.1 `etcd` Raft Consensus, Upgrades & Day-2 Triage** | `01-etcd-consensus-upgrades-and-day2-triage.md` | ⏳ Planned | Raft quorum math, WAL `fsync` $<10\text{ms}$, MVCC compaction/defrag, `etcdctl snapshot` |
+| **6.1 `etcd` Raft Consensus, Upgrades & Day-2 Triage** | [01-etcd-consensus-upgrades-and-day2-triage.md](06-pillar-control-plane-and-etcd/01-etcd-consensus-upgrades-and-day2-triage.md) | ✅ Completed | Raft quorum math, WAL `fsync` $<10\text{ms}$, MVCC compaction/defrag, `etcdctl snapshot` |
 
 ---
 
@@ -139,7 +139,7 @@ architect-learning-vault/
 │   └── 02-network-policies-and-microsegmentation.md
 │
 └── 06-pillar-control-plane-and-etcd/                  # Pillar 6: etcd Raft, Watch Cache & Day-2 DR
-    └── .gitkeep
+    └── 01-etcd-consensus-upgrades-and-day2-triage.md
 ```
 
 ---
